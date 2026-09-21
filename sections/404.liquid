@@ -1,0 +1,18 @@
+<div class="container common-padding" style="text-align: center; max-width: 600px; margin: 0 auto; min-height: 45vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+  <div class="section-heading-content">
+    <h1 style="font-size: 4rem; margin-bottom: 1.6rem;"><span class="italic">{{ '404.title' | t }}</span></h1>
+    <p style="font-size: 1.6rem; color: #555; margin-bottom: 2.4rem;">
+      {{ '404.not_found' | t }}
+    </p>
+    <a href="{{ routes.all_products_collection_url }}" class="btn" style="display: inline-block; background: #df5353; color: #fff; padding: 1.4rem 3.6rem; border-radius: 50px; font-weight: 600; text-decoration: none; font-size: 1.5rem;">
+      {{ '404.back_to_shopping' | t }}
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:general.404",
+  "settings": []
+}
+{% endschema %}

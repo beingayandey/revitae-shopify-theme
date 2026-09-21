@@ -1,0 +1,67 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {}
+    },
+    "ticker_marquee": {
+      "type": "ticker-marquee",
+      "settings": {}
+    },
+    "journey_steps": {
+      "type": "journey-steps",
+      "settings": {}
+    },
+    "standards": {
+      "type": "standards",
+      "settings": {}
+    },
+    "commitment": {
+      "type": "commitment",
+      "settings": {}
+    },
+    "featured_product": {
+      "type": "featured-product",
+      "settings": {}
+    },
+    "comparison": {
+      "type": "comparison",
+      "settings": {}
+    },
+    "results": {
+      "type": "results",
+      "settings": {}
+    },
+    "founder_story": {
+      "type": "founder-story",
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {}
+    },
+    "reclaim_cta": {
+      "type": "reclaim-cta",
+      "settings": {}
+    },
+    "featured_products": {
+      "type": "featured-products",
+      "disabled": true,
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "ticker_marquee",
+    "journey_steps",
+    "standards",
+    "commitment",
+    "featured_product",
+    "comparison",
+    "results",
+    "founder_story",
+    "faq",
+    "reclaim_cta",
+    "featured_products"
+  ]
+}

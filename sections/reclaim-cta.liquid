@@ -1,0 +1,201 @@
+<section class="reclaim-section common-padding" id="reclaim-{{ section.id }}">
+  <div class="container">
+    <h2>
+      {%- if section.settings.heading != blank -%}
+        {{ section.settings.heading | replace: '*', '<span class="italic">' | replace: '</span>*', '</span>' }}
+      {%- else -%}
+        Reclaim Your <span class="italic">Natural Rhythm Today</span>
+      {%- endif -%}
+    </h2>
+
+    <ul class="reclaim-benefits-list">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>
+            <span class="check-icon-circle">
+              <img src="{{ 'banner-ul-icon.svg' | asset_url }}" alt="" width="20" height="20" />
+            </span>
+            <span>{{ block.settings.text }}</span>
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        <li>
+          <span class="check-icon-circle">
+            <img src="{{ 'banner-ul-icon.svg' | asset_url }}" alt="" width="20" height="20" />
+          </span>
+          <span>Immediate support for<br />stress and mood</span>
+        </li>
+        <li>
+          <span class="check-icon-circle">
+            <img src="{{ 'banner-ul-icon.svg' | asset_url }}" alt="" width="20" height="20" />
+          </span>
+          <span>Deeper sleep within<br />the first week</span>
+        </li>
+        <li>
+          <span class="check-icon-circle">
+            <img src="{{ 'banner-ul-icon.svg' | asset_url }}" alt="" width="20" height="20" />
+          </span>
+          <span>Sustained energy that<br />lasts all day</span>
+        </li>
+      {%- endif -%}
+    </ul>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="reclaim-cta-wrap">
+        <a href="{{ section.settings.button_link | default: '#product-showcase' }}" class="btn btn-primary">
+          {{ section.settings.button_label | escape }}
+          <span class="btn-img">
+            <img src="{{ 'btn-plus.svg' | asset_url }}" alt="" width="14" height="14" />
+          </span>
+        </a>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_review -%}
+      <div class="banner-review">
+        <div class="br-left">
+          {%- if section.settings.review_avatar != blank -%}
+            <img
+              src="{{ section.settings.review_avatar | image_url: width: 100 }}"
+              alt="{{ section.settings.review_author | escape }}"
+              loading="lazy"
+              width="{{ section.settings.review_avatar.width }}"
+              height="{{ section.settings.review_avatar.height }}"
+            />
+          {%- else -%}
+            <img
+              src="{{ 'br-img1.png' | asset_url }}"
+              alt="{{ section.settings.review_author | escape }}"
+              loading="lazy"
+              width="52"
+              height="52"
+            />
+          {%- endif -%}
+        </div>
+        <div class="br-right">
+          <p>
+            {%- if section.settings.review_quote_intro != blank -%}
+              {{ section.settings.review_quote_intro | escape }}
+            {%- endif -%}
+            {%- if section.settings.review_quote_highlight != blank -%}
+              <span class="bold">{{ section.settings.review_quote_highlight | escape }}</span>
+            {%- endif -%}
+          </p>
+          <div class="customer-name">
+            <span>{{ section.settings.review_author | default: 'Jenna M' }}</span>
+            {%- if section.settings.review_verified -%}
+              <span class="verifired-badge">
+                <img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12" />
+                Verified Customer
+              </span>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reclaim CTA Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Reclaim Your *Natural Rhythm Today*",
+      "info": "Surround words with asterisks for italic styling, e.g. *Natural Rhythm Today*"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Order Yours Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Customer Review Card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_review",
+      "label": "Show Review Card",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "review_avatar",
+      "label": "Review Avatar"
+    },
+    {
+      "type": "text",
+      "id": "review_quote_intro",
+      "label": "Quote Opening",
+      "default": "\"I was skeptical about gummies, but after two weeks, "
+    },
+    {
+      "type": "text",
+      "id": "review_quote_highlight",
+      "label": "Quote Highlight (Bold)",
+      "default": "the 'brain fog' is gone and I'm sleeping through the night for the first time in years.\""
+    },
+    {
+      "type": "text",
+      "id": "review_author",
+      "label": "Customer Name",
+      "default": "Jenna M"
+    },
+    {
+      "type": "checkbox",
+      "id": "review_verified",
+      "label": "Show Verified Badge",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit_item",
+      "name": "Benefit Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Benefit Text (HTML allowed for <br />)",
+          "default": "Immediate support for<br />stress and mood"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reclaim CTA Banner",
+      "blocks": [
+        {
+          "type": "benefit_item",
+          "settings": {
+            "text": "Immediate support for<br />stress and mood"
+          }
+        },
+        {
+          "type": "benefit_item",
+          "settings": {
+            "text": "Deeper sleep within<br />the first week"
+          }
+        },
+        {
+          "type": "benefit_item",
+          "settings": {
+            "text": "Sustained energy that<br />lasts all day"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,123 @@
+<section class="why-created-section common-padding" id="founder-story-{{ section.id }}">
+  <div class="container">
+    <div class="why-created-grid">
+      <!-- Left Column (for background image woman composition) -->
+      <div
+        class="why-created-media"
+        {% if section.settings.media_image != blank %}
+          style="background-image: url('{{ section.settings.media_image | image_url: width: 1200 }}');"
+        {% endif %}
+      ></div>
+
+      <!-- Right Content Column -->
+      <div class="why-created-content">
+        <h2>
+          {%- if section.settings.heading != blank -%}
+            {{ section.settings.heading | replace: '*', '<span class="italic">' | replace: '</span>*', '</span>' }}
+          {%- else -%}
+            Why We Created <span class="italic">Revitae</span>
+          {%- endif -%}
+        </h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="why-subtitle">{{ section.settings.subtitle | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="why-desc">{{ section.settings.description | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank or section.settings.show_rating -%}
+          <div class="why-cta-wrap">
+            {%- if section.settings.button_label != blank -%}
+              <a href="{{ section.settings.button_link | default: '#product-showcase' }}" class="btn btn-primary">
+                {{ section.settings.button_label | escape }}
+                <span class="btn-img">
+                  <img src="{{ 'btn-plus.svg' | asset_url }}" alt="" width="14" height="14" />
+                </span>
+              </a>
+            {%- endif -%}
+
+            {%- if section.settings.show_rating -%}
+              <div class="rating">
+                <ul>
+                  {%- for i in (1..5) -%}
+                    <li><img src="{{ 'rating-star.svg' | asset_url }}" alt="Star" width="16" height="16" /></li>
+                  {%- endfor -%}
+                </ul>
+                <p>
+                  <span class="bold">{{ section.settings.rating_score | default: '4.8/5' }} </span>
+                  <span class="underline">{{ section.settings.rating_text | default: '(see what 324 people said)' }}</span>
+                </p>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Founder Story / Mission",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why We Created *Revitae*",
+      "info": "Surround words with asterisks for italic styling, e.g. *Revitae*"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "A mission born from the need for a better way to balance."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "We founded Revitae because we were tired of women being told that \"feeling off\" was just a part of getting older. Our mission is to provide premium, science-backed tools that help women reclaim their vitality, their sleep, and their sense of self. You deserve to feel balanced."
+    },
+    {
+      "type": "image_picker",
+      "id": "media_image",
+      "label": "Media Image (Left Column)"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Order Yours Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_score",
+      "label": "Rating Score",
+      "default": "4.8/5"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating Text",
+      "default": "(see what 324 people said)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Founder Story / Mission"
+    }
+  ]
+}
+{% endschema %}

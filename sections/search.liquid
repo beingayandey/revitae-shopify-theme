@@ -1,0 +1,70 @@
+<div class="container common-padding search-page" style="min-height: 50vh;">
+  <div class="section-heading-content" style="margin-bottom: 2.4rem;">
+    <h1><span class="italic">{{ 'search.title' | t }}</span></h1>
+  </div>
+
+  <form action="{{ routes.search_url }}" method="get" role="search" style="display: flex; gap: 1rem; max-width: 500px; margin-bottom: 3.2rem;">
+    <input
+      type="search"
+      name="q"
+      value="{{ search.terms | escape }}"
+      placeholder="{{ 'search.placeholder' | t }}"
+      style="flex: 1; padding: 1.2rem 1.6rem; border: 1px solid #ddd; border-radius: 50px; font-size: 1.5rem;"
+    >
+    <button type="submit" class="btn" style="background: #df5353; color: #fff; border: none; border-radius: 50px; padding: 1.2rem 2.4rem; font-weight: 600; cursor: pointer;">{{ 'search.submit' | t }}</button>
+  </form>
+
+  {% if search.performed %}
+    {% if search.results_count == 0 %}
+      <p style="font-size: 1.6rem; color: #666;">{{ 'search.no_results_html' | t: terms: search.terms }}</p>
+    {% else %}
+      <p style="font-size: 1.6rem; margin-bottom: 2rem;">{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
+
+      <div class="search-results" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2rem;">
+        {% paginate search.results by 20 %}
+          {% for result in search.results %}
+            <div class="search-result" style="border: 1px solid #eee; border-radius: 12px; overflow: hidden; padding: 1.6rem; background: #fff;">
+              {% assign featured_image = result.featured_image | default: result.image %}
+              {% if featured_image %}
+                {% render 'image', class: 'search-result__image', image: featured_image, url: result.url, width: 400 %}
+              {% endif %}
+              <div class="search-result__content" style="margin-top: 1rem;">
+                <p style="font-weight: 600; font-size: 1.5rem;">
+                  {{ result.title | link_to: result.url }}
+                </p>
+                {% if result.price %}
+                  <p style="font-size: 1.4rem; color: #666; margin-top: 0.4rem;">{{ result.price | money }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+
+          {% if paginate.pages > 1 %}
+            <div class="pagination-wrapper" style="grid-column: 1 / -1; margin-top: 3.2rem; text-align: center;">
+              {{ paginate | default_pagination }}
+            </div>
+          {% endif %}
+        {% endpaginate %}
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .search-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  .search-results .prev,
+  .search-results .page,
+  .search-results .next {
+    grid-column: 1 / -1;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.search",
+  "settings": []
+}
+{% endschema %}

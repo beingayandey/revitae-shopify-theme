@@ -1,0 +1,181 @@
+<section class="faq-section common-padding" id="faq-{{ section.id }}">
+  <div class="container">
+    <div class="faq-grid">
+      <!-- Left Side: Heading & Content -->
+      <div class="faq-content">
+        <h2>
+          {%- if section.settings.heading != blank -%}
+            {{ section.settings.heading | replace: '*', '<span class="italic">' | replace: '</span>*', '</span>' }}
+          {%- else -%}
+            Frequently Asked <span class="italic">Questions</span>
+          {%- endif -%}
+        </h2>
+        {%- if section.settings.subheading != blank -%}
+          <p>{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      <!-- Right Side: FAQ Accordion -->
+      <div class="faq-accordion-wrapper accordion-wrapper">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <div class="accordion-item{% if forloop.first %} active{% endif %}" {{ block.shopify_attributes }}>
+              <button
+                class="accordion-header"
+                type="button"
+                aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+              >
+                <span class="accordion-title">{{ block.settings.question | escape }}</span>
+                <span class="accordion-icon-toggle"></span>
+              </button>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  {{ block.settings.answer | escape | newline_to_br }}
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="accordion-item active">
+            <button class="accordion-header" type="button" aria-expanded="true">
+              <span class="accordion-title">How long does it take to see results?</span>
+              <span class="accordion-icon-toggle"></span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                While many women feel improved sleep within days, we recommend 30 days of consistent use for full hormonal stabilization and mood benefits.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header" type="button" aria-expanded="false">
+              <span class="accordion-title">Can I take this with other supplements?</span>
+              <span class="accordion-icon-toggle"></span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                Yes! Revitae is formulated with gentle, natural botanicals that complement most daily vitamin routines. If you take prescription medications, we recommend consulting your healthcare provider.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header" type="button" aria-expanded="false">
+              <span class="accordion-title">Are the gummies vegan-friendly?</span>
+              <span class="accordion-icon-toggle"></span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                Yes, 100%! Our gummies are made with pectin instead of animal gelatin, making them completely vegan, non-GMO, and free from artificial dyes.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header" type="button" aria-expanded="false">
+              <span class="accordion-title">How do I manage my subscription?</span>
+              <span class="accordion-icon-toggle"></span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                You can pause, skip, or cancel your subscription at any time directly through your account dashboard or by contacting our customer support team.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header" type="button" aria-expanded="false">
+              <span class="accordion-title">Is there any caffeine in Revitae?</span>
+              <span class="accordion-icon-toggle"></span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                No, Revitae is completely caffeine-free and non-stimulant. It promotes natural, sustained daily energy without jittery spikes or crashes.
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked *Questions*",
+      "info": "Surround words with asterisks for italic styling, e.g. *Questions*"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Everything you need to know about starting your Revitae journey today."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How long does it take to see results?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "While many women feel improved sleep within days, we recommend 30 days of consistent use for full hormonal stabilization and mood benefits."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does it take to see results?",
+            "answer": "While many women feel improved sleep within days, we recommend 30 days of consistent use for full hormonal stabilization and mood benefits."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I take this with other supplements?",
+            "answer": "Yes! Revitae is formulated with gentle, natural botanicals that complement most daily vitamin routines. If you take prescription medications, we recommend consulting your healthcare provider."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are the gummies vegan-friendly?",
+            "answer": "Yes, 100%! Our gummies are made with pectin instead of animal gelatin, making them completely vegan, non-GMO, and free from artificial dyes."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I manage my subscription?",
+            "answer": "You can pause, skip, or cancel your subscription at any time directly through your account dashboard or by contacting our customer support team."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is there any caffeine in Revitae?",
+            "answer": "No, Revitae is completely caffeine-free and non-stimulant. It promotes natural, sustained daily energy without jittery spikes or crashes."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

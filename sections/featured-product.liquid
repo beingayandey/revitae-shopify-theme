@@ -1,0 +1,514 @@
+{%- liquid
+  assign featured_product = all_products[section.settings.product]
+  if featured_product == blank and section.settings.product != blank
+    assign featured_product = section.settings.product
+  endif
+  if featured_product == blank and collections.all.products.size > 0
+    assign featured_product = collections.all.products.first
+  endif
+  assign current_variant = featured_product.selected_or_first_available_variant
+-%}
+
+<section id="product-showcase" class="hormones-section common-padding product-section" data-section-id="{{ section.id }}">
+  <div class="container">
+    <div class="parent-hormones-section">
+      <!-- Left Column: Swiper Image Gallery -->
+      <div class="hormones-left">
+        <div class="hormones-slider">
+          <div class="hormones-main-wrapper">
+            <div class="swiper hormones-main-swiper">
+              <div class="swiper-wrapper">
+                {% if featured_product != blank and featured_product.images.size > 0 and featured_product.handle != 'gift-card' %}
+                  {% for image in featured_product.images %}
+                    <div class="swiper-slide" data-image-id="{{ image.id }}">
+                      <div class="hormones-main-img-box">
+                        <img
+                          src="{{ image | image_url: width: 800 }}"
+                          alt="{{ image.alt | default: featured_product.title | escape }}"
+                          width="600"
+                          height="600"
+                          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                        >
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  {% for i in (1..5) %}
+                    <div class="swiper-slide">
+                      <div class="hormones-main-img-box">
+                        <img src="{{ 'hormones-slider-img.png' | asset_url }}" alt="Hormone Balance Gummies" width="600" height="600" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+            <!-- Navigation Buttons -->
+            <button type="button" class="swiper-button-prev hormones-nav-prev" aria-label="Previous slide">
+              <img src="{{ 'left-arrow.svg' | asset_url }}" alt="Previous" width="16" height="16">
+            </button>
+            <button type="button" class="swiper-button-next hormones-nav-next" aria-label="Next slide">
+              <img src="{{ 'right-arrow.svg' | asset_url }}" alt="Next" width="16" height="16">
+            </button>
+          </div>
+
+          <!-- Thumbnails Swiper -->
+          <div class="swiper hormones-thumbs-swiper">
+            <div class="swiper-wrapper">
+              {% if featured_product != blank and featured_product.images.size > 0 and featured_product.handle != 'gift-card' %}
+                {% for image in featured_product.images %}
+                  <div class="swiper-slide">
+                    <div class="hormones-thumb-img-box">
+                      <img
+                        src="{{ image | image_url: width: 200 }}"
+                        alt="{{ image.alt | default: featured_product.title | escape }}"
+                        width="100"
+                        height="100"
+                        loading="lazy"
+                      >
+                    </div>
+                  </div>
+                {% endfor %}
+              {% else %}
+                {% for i in (1..5) %}
+                  <div class="swiper-slide">
+                    <div class="hormones-thumb-img-box">
+                      <img src="{{ 'hormones-slider-img.png' | asset_url }}" alt="Hormone Balance Gummies Thumbnail {{ i }}" width="100" height="100" loading="lazy">
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Review Box under Gallery -->
+        <div class="banner-review">
+          <div class="br-left">
+            <img src="{{ 'br-img1.png' | asset_url }}" alt="" width="50" height="50">
+          </div>
+          <div class="br-right">
+            <p>
+              "I was skeptical about gummies, but after two weeks,
+              <span class="bold">the 'brain fog' is gone and I'm sleeping through the night for the first time in years.</span>"
+            </p>
+            <div class="customer-name">
+              <span>Jenna M</span>
+              <span class="verifired-badge">
+                <img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12">
+                Verified Customer
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Details & Pricing -->
+      <div class="hormones-right">
+        <div class="rating">
+          <ul>
+            <li><img src="{{ 'rating-star.svg' | asset_url }}" alt="Star" width="16" height="16"></li>
+            <li><img src="{{ 'rating-star.svg' | asset_url }}" alt="Star" width="16" height="16"></li>
+            <li><img src="{{ 'rating-star.svg' | asset_url }}" alt="Star" width="16" height="16"></li>
+            <li><img src="{{ 'rating-star.svg' | asset_url }}" alt="Star" width="16" height="16"></li>
+            <li><img src="{{ 'rating-star.svg' | asset_url }}" alt="Star" width="16" height="16"></li>
+          </ul>
+          <p>
+            <span class="bold">4.8/5 </span>
+            <span class="underline"> (see what 324 people said) </span>
+          </p>
+        </div>
+        <div class="section-heading-content">
+          <h2>
+            <span class="italic">
+              {% if featured_product == blank or featured_product.handle == 'gift-card' %}
+                {{ section.settings.heading | default: 'Hormone Balance Gummies' }}
+              {% else %}
+                {{ featured_product.title }}
+              {% endif %}
+            </span>
+          </h2>
+          <div class="price-container" style="display: flex; align-items: center; gap: 1rem; margin: 0.8rem 0;">
+            <span class="price js-product-price">
+              {% if featured_product != blank %}
+                {{ current_variant.price | money }}
+              {% else %}
+                $49.00
+              {% endif %}
+            </span>
+            <span class="old-price js-product-compare-price" style="text-decoration: line-through; opacity: 0.6; font-size: 1.8rem; {% unless current_variant.compare_at_price > current_variant.price %}display:none;{% endunless %}">
+              {{ current_variant.compare_at_price | money }}
+            </span>
+            <span class="remaining-item js-stock-badge">
+              Hurry! Only 4 Left
+            </span>
+          </div>
+          <p>
+            {{ section.settings.description | default: 'Reclaim your natural rhythm with our potent, hormone-supporting daily gummy ritual.' }}
+          </p>
+        </div>
+
+        <ul class="banner-ul">
+          <li>
+            <img src="{{ 'banner-ul-icon.svg' | asset_url }}" alt="" width="20" height="20">
+            Get deep &amp; restful sleep every single night
+          </li>
+          <li>
+            <img src="{{ 'banner-ul-icon.svg' | asset_url }}" alt="" width="20" height="20">
+            Zero afternoon mood crashes or spikes
+          </li>
+          <li>
+            <img src="{{ 'banner-ul-icon.svg' | asset_url }}" alt="" width="20" height="20">
+            Experience natural hormonal harmony from within
+          </li>
+        </ul>
+
+        <div class="hormones-cart-wrapper">
+          <!-- Variant Option Cards -->
+          <div class="parent-product">
+            {% if featured_product != blank and featured_product.has_only_default_variant == false and featured_product.variants.size > 0 %}
+              {% for variant in featured_product.variants %}
+                {% if featured_product.handle == 'gift-card' and forloop.index > 3 %}
+                  {% continue %}
+                {% endif %}
+                {%- liquid
+                  assign var_image_idx = 0
+                  if variant.featured_image != blank
+                    for img in featured_product.images
+                      if img.id == variant.featured_image.id
+                        assign var_image_idx = forloop.index0
+                        break
+                      endif
+                    endfor
+                  endif
+
+                  assign card_title = variant.title
+                  assign card_duration = 'Supply Option'
+                  assign card_fallback_img = ''
+
+                  if featured_product.handle == 'gift-card'
+                    if forloop.index == 1
+                      assign card_title = '1 Bottle'
+                      assign card_duration = '1-Month Supply'
+                      assign card_fallback_img = 'product-img1.png'
+                    elsif forloop.index == 2
+                      assign card_title = '3 Bottles'
+                      assign card_duration = '3-Month Supply'
+                      assign card_fallback_img = 'product-img2.png'
+                    elsif forloop.index == 3
+                      assign card_title = '6 Bottles'
+                      assign card_duration = '6-Month Supply'
+                      assign card_fallback_img = 'product-img3.png'
+                    endif
+                  endif
+                -%}
+                <div
+                  class="product-col js-variant-card{% if variant.id == current_variant.id %} active{% endif %}"
+                  data-variant-id="{{ variant.id }}"
+                  data-price="{{ variant.price | money }}"
+                  data-price-raw="{{ variant.price }}"
+                  data-compare-at-price="{{ variant.compare_at_price | money }}"
+                  data-compare-at-price-raw="{{ variant.compare_at_price }}"
+                  data-available="{% if featured_product.handle == 'gift-card' %}true{% else %}{{ variant.available }}{% endif %}"
+                  data-image-index="{{ var_image_idx }}"
+                  role="button"
+                  tabindex="0"
+                  style="cursor: pointer;"
+                >
+                  <div class="product-box">
+                    <div class="product-images">
+                      {% if card_fallback_img != blank %}
+                        <img src="{{ card_fallback_img | asset_url }}" alt="{{ card_title }}" width="100" height="100">
+                      {% elsif variant.image != blank %}
+                        <img src="{{ variant.image | image_url: width: 300 }}" alt="{{ variant.title }}" width="100" height="100">
+                      {% elsif featured_product.featured_image != blank %}
+                        <img src="{{ featured_product.featured_image | image_url: width: 300 }}" alt="{{ variant.title }}" width="100" height="100">
+                      {% else %}
+                        <img src="{{ 'product-img1.png' | asset_url }}" alt="{{ variant.title }}" width="100" height="100">
+                      {% endif %}
+                      {% if variant.compare_at_price > variant.price %}
+                        <div class="offer">Save {{ variant.compare_at_price | minus: variant.price | money }}</div>
+                      {% elsif featured_product.handle == 'gift-card' and forloop.index > 1 %}
+                        <div class="offer">Save {% if forloop.index == 2 %}10%{% else %}20%{% endif %}</div>
+                      {% endif %}
+                    </div>
+                    <div class="product-details{% if variant.id == current_variant.id %} active{% endif %}">
+                      <div class="product-qty">{{ card_title }}</div>
+                      <div class="product-duration">{{ card_duration }}</div>
+                      <div class="product-price">{{ variant.price | money }}</div>
+                    </div>
+                    {% if forloop.index == 2 %}
+                      <div class="tag">Most Popular</div>
+                    {% elsif forloop.index == 3 %}
+                      <div class="tag">Best Value</div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="product-col active" data-variant-id="{{ current_variant.id }}">
+                <div class="product-box">
+                  <div class="product-images">
+                    {% if featured_product.featured_image != blank %}
+                      <img src="{{ featured_product.featured_image | image_url: width: 300 }}" alt="" width="100" height="100">
+                    {% else %}
+                      <img src="{{ 'product-img1.png' | asset_url }}" alt="" width="100" height="100">
+                    {% endif %}
+                  </div>
+                  <div class="product-details active">
+                    <div class="product-qty">{{ featured_product.title | default: '1 Bottle' }}</div>
+                    <div class="product-duration">1-Month Supply</div>
+                    <div class="product-price">{{ current_variant.price | default: 0 | money }}</div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Purchase Options Wrapper -->
+          <div class="purchase-options-wrapper">
+            <!-- Subscribe & Save Option Card -->
+            <div class="purchase-option-card subscribe-option active" data-option="subscribe">
+              <div class="option-header">
+                <div class="option-title-wrap">
+                  <span class="custom-radio">
+                    <span class="radio-inner"></span>
+                  </span>
+                  <span class="option-title">Subscribe &amp; Save</span>
+                </div>
+                <div class="option-price-wrap">
+                  <span class="save-badge">Save 10%</span>
+                  <span class="old-price js-sub-old-price">{{ current_variant.price | money }}</span>
+                  <span class="current-price js-sub-price">{{ current_variant.price | times: 0.9 | money }}</span>
+                </div>
+              </div>
+
+              <!-- Delivery Frequency Dropdown -->
+              <div class="custom-dropdown-wrap">
+                <div class="custom-dropdown-trigger" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="selected-delivery-text">Deliver every 12 weeks</span>
+                  <img class="dropdown-arrow" src="{{ 'dropdown-arrow.svg' | asset_url }}" alt="" width="12" height="12">
+                </div>
+                <ul class="custom-dropdown-menu" role="listbox">
+                  <li class="dropdown-option" data-value="4-weeks" role="option">Deliver every 4 weeks</li>
+                  <li class="dropdown-option" data-value="8-weeks" role="option">Deliver every 8 weeks</li>
+                  <li class="dropdown-option active" data-value="12-weeks" role="option">Deliver every 12 weeks</li>
+                </ul>
+              </div>
+
+              <ul class="subscribe-benefits-list">
+                <li>
+                  <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span>Skip, pause or cancel at any time</span>
+                </li>
+                <li>
+                  <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span>Always get the best price</span>
+                </li>
+                <li>
+                  <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span>Make sure your supply never runs out</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- One Time Purchase Option Card -->
+            <div class="purchase-option-card onetime-option" data-option="onetime">
+              <div class="option-header">
+                <div class="option-title-wrap">
+                  <span class="custom-radio">
+                    <span class="radio-inner"></span>
+                  </span>
+                  <span class="option-title">One Time Purchase</span>
+                </div>
+                <div class="option-price-wrap">
+                  <span class="current-price js-onetime-price">{{ current_variant.price | money }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product Form (Add to Cart) -->
+            <form method="post" action="{{ routes.cart_add_url }}" class="product-form js-product-form" id="AddToCartForm-{{ section.id }}">
+              <input type="hidden" name="id" class="js-variant-input" value="{{ current_variant.id }}">
+
+              <!-- Quantity Selector -->
+              <div class="quantity-selector-wrapper" style="display: flex; align-items: center; gap: 1.2rem; margin-top: 1.6rem; margin-bottom: 1.6rem;">
+                <label for="Quantity-{{ section.id }}" style="font-weight: 600; font-size: 1.4rem; color: #2d2d2d;">Quantity:</label>
+                <div class="quantity-controls" style="display: inline-flex; align-items: center; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: #fff;">
+                  <button type="button" class="qty-btn qty-minus js-qty-minus" aria-label="Decrease quantity" style="padding: 0.8rem 1.4rem; background: none; border: none; font-size: 1.6rem; cursor: pointer; line-height: 1;">&minus;</button>
+                  <input
+                    type="number"
+                    id="Quantity-{{ section.id }}"
+                    name="quantity"
+                    class="qty-input js-qty-input"
+                    value="1"
+                    min="1"
+                    aria-label="Quantity"
+                    style="width: 4.5rem; text-align: center; border: none; font-size: 1.5rem; font-weight: 600; padding: 0.6rem 0;"
+                  >
+                  <button type="button" class="qty-btn qty-plus js-qty-plus" aria-label="Increase quantity" style="padding: 0.8rem 1.4rem; background: none; border: none; font-size: 1.6rem; cursor: pointer; line-height: 1;">&#43;</button>
+                </div>
+              </div>
+
+              <!-- Add to Cart Button -->
+              <div class="add-cart-btn">
+                {%- liquid
+                  assign is_card_available = current_variant.available
+                  if featured_product.handle == 'gift-card' or featured_product == blank
+                    assign is_card_available = true
+                  endif
+                -%}
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-cart js-add-to-cart-btn"
+                  {% unless is_card_available %}disabled{% endunless %}
+                  style="width: 100%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer;"
+                >
+                  <span class="btn-text js-btn-text">
+                    {% if is_card_available %}
+                      Add to Cart &ndash; <span class="js-btn-price">{{ current_variant.price | times: 0.9 | money }}</span>
+                    {% else %}
+                      Sold Out
+                    {% endif %}
+                  </span>
+                  <span class="cart-icon-wrap" style="margin-left: 0.8rem;">
+                    <img src="{{ 'add-to-cart.svg' | asset_url }}" alt="Cart Icon" width="20" height="20">
+                  </span>
+                </button>
+              </div>
+
+              <!-- Feedback & Error Notice -->
+              <div class="product-form-error js-form-error" style="display: none; color: #d9534f; margin-top: 1rem; font-size: 1.3rem; font-weight: 600;"></div>
+            </form>
+
+            <!-- Delivery Estimate Text -->
+            <p class="delivery-estimate-text">
+              <span class="bold"> Order now </span> for delivery in <span class="bold">2&ndash;4 business days</span>
+            </p>
+
+            <!-- 3-Icon Feature Section -->
+            <div class="product-features-row">
+              <div class="feature-item">
+                <div class="standard-img feature-icon-box">
+                  <img src="{{ 'standard-sec-emoji.svg' | asset_url }}" alt="" width="30" height="30">
+                </div>
+                <span class="feature-label">100% Happiness<br>Guarantee</span>
+              </div>
+
+              <div class="feature-item">
+                <div class="standard-img feature-icon-box">
+                  <img src="{{ 'cart-sec-emoji2.svg' | asset_url }}" alt="" width="30" height="30">
+                </div>
+                <span class="feature-label">Third-Party<br>Lab Tested</span>
+              </div>
+
+              <div class="feature-item">
+                <div class="standard-img feature-icon-box">
+                  <img src="{{ 'cart-sec-emoji3.svg' | asset_url }}" alt="" width="30" height="30">
+                </div>
+                <span class="feature-label">Fast, Discrete<br>Shipping</span>
+              </div>
+            </div>
+
+            <!-- Custom Accordion Section -->
+            <div class="product-accordion-wrapper">
+              <!-- Item 1: Product Description -->
+              <div class="accordion-item active">
+                <button class="accordion-header" type="button" aria-expanded="true">
+                  <span class="accordion-title">Product Description</span>
+                  <span class="accordion-icon-toggle"></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    {{ featured_product.description | default: section.settings.description }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 2: Ingredients & Allergens -->
+              <div class="accordion-item">
+                <button class="accordion-header" type="button" aria-expanded="false">
+                  <span class="accordion-title">Ingredients &amp; Allergens</span>
+                  <span class="accordion-icon-toggle"></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Doctor-formulated with Ashwagandha root extract, Chasteberry (Vitex), Vitamin B6, B12, and organic tapioca syrup. Non-GMO, gluten-free, vegan, and free of artificial dyes or gelatin.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 3: How to Use -->
+              <div class="accordion-item">
+                <button class="accordion-header" type="button" aria-expanded="false">
+                  <span class="accordion-title">How to Use</span>
+                  <span class="accordion-icon-toggle"></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Take 2 delicious gummies daily with or without food. For maximum restorative benefits, enjoy consistently in the morning or evening as part of your daily wellness ritual.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 4: Shipping & Returns -->
+              <div class="accordion-item">
+                <button class="accordion-header" type="button" aria-expanded="false">
+                  <span class="accordion-title">Shipping &amp; Returns</span>
+                  <span class="accordion-icon-toggle"></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Free standard shipping on all orders. Every order is backed by our 30-Day Risk-Free Guarantee. If you don't love your results, contact support for a full refund.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if featured_product != blank %}
+    <script type="application/json" class="js-product-json">
+      {{ featured_product | json }}
+    </script>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Featured Product Showcase",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading override",
+      "default": "Hormone Balance Gummies"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description override",
+      "default": "Reclaim your natural rhythm with our potent, hormone-supporting daily gummy ritual."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Product Showcase"
+    }
+  ]
+}
+{% endschema %}

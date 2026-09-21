@@ -1,0 +1,167 @@
+<header>
+  {% if section.settings.show_announcement %}
+    <!-- Top Announcement Bar -->
+    <div class="top-nav">
+      <div class="container">
+        <p class="top-nav-text">
+          {{ section.settings.announcement_text }}
+          {% if section.settings.announcement_link_text != blank %}
+            <a href="{{ section.settings.announcement_link | default: '#' }}">{{ section.settings.announcement_link_text }}</a>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Main Navbar -->
+  <div class="bottom-nav">
+    <nav class="custom-navbar" aria-label="Main Navigation">
+      <div class="container navbar-container">
+        <!-- Mobile Left Items (Hamburger & Search) -->
+        <div class="nav-left-group">
+          <button
+            class="nav-toggle"
+            type="button"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            aria-controls="primary-navigation"
+          >
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </button>
+          <a
+            href="{{ routes.search_url }}"
+            class="search-icon mobile-search-btn"
+            aria-label="Search"
+          >
+            <img src="{{ 'search-icon.svg' | asset_url }}" alt="Search" width="20" height="20" />
+          </a>
+        </div>
+
+        <!-- Brand / Logo -->
+        <a class="nav-brand" href="{{ routes.root_url }}" aria-label="Home">
+          {% if section.settings.logo != blank %}
+            <img src="{{ section.settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" />
+          {% else %}
+            <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" />
+          {% endif %}
+        </a>
+
+        <!-- Mobile Right Items (User & Cart) -->
+        <div class="nav-right-group">
+          <a href="{{ routes.account_url }}" class="user-icon" aria-label="Account">
+            <img src="{{ 'user-icon.svg' | asset_url }}" alt="User" width="20" height="20" />
+          </a>
+          <a href="{{ routes.cart_url }}" class="cart-icon" aria-label="Cart">
+            <img src="{{ 'cart-icon.svg' | asset_url }}" alt="Cart" width="20" height="20" />
+            <span class="cart-count-badge js-cart-count" {% if cart.item_count == 0 %}style="display:none;"{% endif %}>{{ cart.item_count }}</span>
+          </a>
+        </div>
+
+        <!-- Navigation Menu Drawer -->
+        <div class="nav-menu-wrapper" id="primary-navigation">
+          <!-- Nav Links -->
+          <ul class="nav-links">
+            {% assign main_menu = linklists[section.settings.menu] %}
+            {% if main_menu != blank and main_menu.links.size > 0 %}
+              {% for link in main_menu.links %}
+                <li>
+                  <a href="{{ link.url }}" class="nav-link{% if link.active %} active{% endif %}">
+                    {{ link.title }}
+                    {% if link.links.size > 0 %}
+                      <span class="nav-icon">
+                        <img src="{{ 'arrow-down.svg' | asset_url }}" alt="Dropdown Arrow" width="12" height="12" />
+                      </span>
+                    {% endif %}
+                  </a>
+                </li>
+              {% endfor %}
+            {% elsif section.settings.menu.links.size > 0 %}
+              {% for link in section.settings.menu.links %}
+                <li>
+                  <a href="{{ link.url }}" class="nav-link{% if link.active %} active{% endif %}">
+                    {{ link.title }}
+                    {% if link.links.size > 0 %}
+                      <span class="nav-icon">
+                        <img src="{{ 'arrow-down.svg' | asset_url }}" alt="Dropdown Arrow" width="12" height="12" />
+                      </span>
+                    {% endif %}
+                  </a>
+                </li>
+              {% endfor %}
+            {% else %}
+              <li>
+                <a href="#" class="nav-link active">
+                  Products
+                  <span class="nav-icon">
+                    <img src="{{ 'arrow-down.svg' | asset_url }}" alt="Dropdown Arrow" width="12" height="12" />
+                  </span>
+                </a>
+              </li>
+              <li><a href="#" class="nav-link">About</a></li>
+              <li><a href="#" class="nav-link">FAQs</a></li>
+              <li><a href="#" class="nav-link">Contact</a></li>
+            {% endif %}
+          </ul>
+
+          <!-- Nav Actions for Desktop -->
+          <div class="nav-actions desktop-nav-actions">
+            <a href="{{ routes.search_url }}" class="search-icon" aria-label="Search">
+              <img src="{{ 'search-icon.svg' | asset_url }}" alt="Search" width="20" height="20" />
+            </a>
+            <a href="{{ routes.account_url }}" class="user-icon" aria-label="Account">
+              <img src="{{ 'user-icon.svg' | asset_url }}" alt="User" width="20" height="20" />
+            </a>
+            <a href="{{ routes.cart_url }}" class="cart-icon" aria-label="Cart">
+              <img src="{{ 'cart-icon.svg' | asset_url }}" alt="Cart" width="20" height="20" />
+              <span class="cart-count-badge js-cart-count" {% if cart.item_count == 0 %}style="display:none;"{% endif %}>{{ cart.item_count }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "Get free shipping on your first order!"
+    },
+    {
+      "type": "text",
+      "id": "announcement_link_text",
+      "label": "Announcement link text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "announcement_link",
+      "label": "Announcement link"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Header menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

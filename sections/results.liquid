@@ -1,0 +1,310 @@
+<section class="results-section common-padding" id="results-{{ section.id }}">
+  <div class="container">
+    <div class="section-heading-content">
+      <h2>
+        {%- if section.settings.heading != blank -%}
+          {{ section.settings.heading | replace: '*', '<span class="italic">' | replace: '</span>*', '</span>' }}
+        {%- else -%}
+          Real Women with <span class="italic">Real Results</span>
+        {%- endif -%}
+      </h2>
+      {%- if section.settings.subheading != blank -%}
+        <p>{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- Edge to Edge Double Continuous Slider -->
+  <div class="results-slider-wrapper">
+    <!-- Top Row Slider (Moving Left) -->
+    <div class="results-slider-row slider-top">
+      <div class="results-track track-left">
+        {%- if section.blocks.size > 0 -%}
+          {%- for i in (1..2) -%}
+            {%- for block in section.blocks -%}
+              <div class="banner-review" {{ block.shopify_attributes }}>
+                <div class="br-left">
+                  {%- if block.settings.avatar != blank -%}
+                    <img
+                      src="{{ block.settings.avatar | image_url: width: 100 }}"
+                      alt="{{ block.settings.name | escape }}"
+                      loading="lazy"
+                      width="{{ block.settings.avatar.width }}"
+                      height="{{ block.settings.avatar.height }}"
+                    />
+                  {%- else -%}
+                    <img
+                      src="{{ 'br-img1.png' | asset_url }}"
+                      alt="{{ block.settings.name | escape }}"
+                      loading="lazy"
+                      width="52"
+                      height="52"
+                    />
+                  {%- endif -%}
+                </div>
+                <div class="br-right">
+                  <p>
+                    {%- if block.settings.quote_intro != blank -%}
+                      {{ block.settings.quote_intro | escape }}
+                    {%- endif -%}
+                    {%- if block.settings.quote_highlight != blank -%}
+                      <span class="bold">{{ block.settings.quote_highlight | escape }}</span>
+                    {%- endif -%}
+                  </p>
+                  <div class="customer-name">
+                    <span>{{ block.settings.name | escape }}</span>
+                    {%- if block.settings.verified -%}
+                      <span class="verifired-badge">
+                        <img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12" />
+                        Verified Customer
+                      </span>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..2) -%}
+            <div class="banner-review">
+              <div class="br-left"><img src="{{ 'br-img1.png' | asset_url }}" alt="" width="52" height="52" /></div>
+              <div class="br-right">
+                <p>"I was skeptical about gummies, but after two weeks, <span class="bold">the 'brain fog' is gone and I'm sleeping through the night for the first time in years."</span></p>
+                <div class="customer-name">
+                  <span>Jenna M</span>
+                  <span class="verifired-badge"><img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12" /> Verified Customer</span>
+                </div>
+              </div>
+            </div>
+            <div class="banner-review">
+              <div class="br-left"><img src="{{ 'br-img1.png' | asset_url }}" alt="" width="52" height="52" /></div>
+              <div class="br-right">
+                <p>"My energy levels are finally stable throughout the day. <span class="bold">No more 3pm crashes or restless nights!"</span></p>
+                <div class="customer-name">
+                  <span>Sarah L</span>
+                  <span class="verifired-badge"><img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12" /> Verified Customer</span>
+                </div>
+              </div>
+            </div>
+            <div class="banner-review">
+              <div class="br-left"><img src="{{ 'br-img1.png' | asset_url }}" alt="" width="52" height="52" /></div>
+              <div class="br-right">
+                <p>"Revitae has completely transformed my mood and focus. <span class="bold">I feel like myself again for the first time in ages."</span></p>
+                <div class="customer-name">
+                  <span>Emily R</span>
+                  <span class="verifired-badge"><img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12" /> Verified Customer</span>
+                </div>
+              </div>
+            </div>
+            <div class="banner-review">
+              <div class="br-left"><img src="{{ 'br-img1.png' | asset_url }}" alt="" width="52" height="52" /></div>
+              <div class="br-right">
+                <p>"Noticeable difference in my sleep quality within 10 days. <span class="bold">Waking up refreshed every morning."</span></p>
+                <div class="customer-name">
+                  <span>Jessica T</span>
+                  <span class="verifired-badge"><img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12" /> Verified Customer</span>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- Bottom Row Slider (Moving Right) -->
+    <div class="results-slider-row slider-bottom">
+      <div class="results-track track-right">
+        {%- if section.blocks.size > 0 -%}
+          {%- for i in (1..2) -%}
+            {%- for block in section.blocks -%}
+              <div class="banner-review">
+                <div class="br-left">
+                  {%- if block.settings.avatar != blank -%}
+                    <img
+                      src="{{ block.settings.avatar | image_url: width: 100 }}"
+                      alt="{{ block.settings.name | escape }}"
+                      loading="lazy"
+                      width="{{ block.settings.avatar.width }}"
+                      height="{{ block.settings.avatar.height }}"
+                    />
+                  {%- else -%}
+                    <img
+                      src="{{ 'br-img1.png' | asset_url }}"
+                      alt="{{ block.settings.name | escape }}"
+                      loading="lazy"
+                      width="52"
+                      height="52"
+                    />
+                  {%- endif -%}
+                </div>
+                <div class="br-right">
+                  <p>
+                    {%- if block.settings.quote_intro != blank -%}
+                      {{ block.settings.quote_intro | escape }}
+                    {%- endif -%}
+                    {%- if block.settings.quote_highlight != blank -%}
+                      <span class="bold">{{ block.settings.quote_highlight | escape }}</span>
+                    {%- endif -%}
+                  </p>
+                  <div class="customer-name">
+                    <span>{{ block.settings.name | escape }}</span>
+                    {%- if block.settings.verified -%}
+                      <span class="verifired-badge">
+                        <img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12" />
+                        Verified Customer
+                      </span>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..2) -%}
+            <div class="banner-review">
+              <div class="br-left"><img src="{{ 'br-img1.png' | asset_url }}" alt="" width="52" height="52" /></div>
+              <div class="br-right">
+                <p>"I was skeptical about gummies, but after two weeks, <span class="bold">the 'brain fog' is gone and I'm sleeping through the night for the first time in years."</span></p>
+                <div class="customer-name">
+                  <span>Jenna M</span>
+                  <span class="verifired-badge"><img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12" /> Verified Customer</span>
+                </div>
+              </div>
+            </div>
+            <div class="banner-review">
+              <div class="br-left"><img src="{{ 'br-img1.png' | asset_url }}" alt="" width="52" height="52" /></div>
+              <div class="br-right">
+                <p>"My energy levels are finally stable throughout the day. <span class="bold">No more 3pm crashes or restless nights!"</span></p>
+                <div class="customer-name">
+                  <span>Sarah L</span>
+                  <span class="verifired-badge"><img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12" /> Verified Customer</span>
+                </div>
+              </div>
+            </div>
+            <div class="banner-review">
+              <div class="br-left"><img src="{{ 'br-img1.png' | asset_url }}" alt="" width="52" height="52" /></div>
+              <div class="br-right">
+                <p>"Revitae has completely transformed my mood and focus. <span class="bold">I feel like myself again for the first time in ages."</span></p>
+                <div class="customer-name">
+                  <span>Emily R</span>
+                  <span class="verifired-badge"><img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12" /> Verified Customer</span>
+                </div>
+              </div>
+            </div>
+            <div class="banner-review">
+              <div class="br-left"><img src="{{ 'br-img1.png' | asset_url }}" alt="" width="52" height="52" /></div>
+              <div class="br-right">
+                <p>"Noticeable difference in my sleep quality within 10 days. <span class="bold">Waking up refreshed every morning."</span></p>
+                <div class="customer-name">
+                  <span>Jessica T</span>
+                  <span class="verifired-badge"><img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12" /> Verified Customer</span>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Results & Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Real Women with *Real Results*",
+      "info": "Surround words with asterisks for italic styling, e.g. *Real Results*"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Hear from the thousands of women who have found their balance again."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Customer Photo / Avatar"
+        },
+        {
+          "type": "text",
+          "id": "quote_intro",
+          "label": "Quote Opening Text",
+          "default": "\"I was skeptical about gummies, but after two weeks, "
+        },
+        {
+          "type": "text",
+          "id": "quote_highlight",
+          "label": "Quote Highlight (Bold)",
+          "default": "the 'brain fog' is gone and I'm sleeping through the night for the first time in years.\""
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer Name",
+          "default": "Jenna M"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Show Verified Customer Badge",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Results & Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote_intro": "\"I was skeptical about gummies, but after two weeks, ",
+            "quote_highlight": "the 'brain fog' is gone and I'm sleeping through the night for the first time in years.\"",
+            "name": "Jenna M",
+            "verified": true
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote_intro": "\"My energy levels are finally stable throughout the day. ",
+            "quote_highlight": "No more 3pm crashes or restless nights!\"",
+            "name": "Sarah L",
+            "verified": true
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote_intro": "\"Revitae has completely transformed my mood and focus. ",
+            "quote_highlight": "I feel like myself again for the first time in ages.\"",
+            "name": "Emily R",
+            "verified": true
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote_intro": "\"Noticeable difference in my sleep quality within 10 days. ",
+            "quote_highlight": "Waking up refreshed every morning.\"",
+            "name": "Jessica T",
+            "verified": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

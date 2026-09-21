@@ -1,0 +1,72 @@
+<section class="banner-after-slider swiper" id="ticker-marquee-{{ section.id }}">
+  <ul class="swiper-wrapper">
+    {%- if section.blocks.size > 0 -%}
+      {%- for i in (1..3) -%}
+        {%- for block in section.blocks -%}
+          <li class="swiper-slide" {{ block.shopify_attributes }}>
+            <h2>
+              {%- if block.settings.italic -%}
+                <span class="italic">{{ block.settings.text | escape }}</span>
+              {%- else -%}
+                {{ block.settings.text | escape }}
+              {%- endif -%}
+            </h2>
+          </li>
+        {%- endfor -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..3) -%}
+        <li class="swiper-slide">
+          <h2><span class="italic">Keto-Friendly</span></h2>
+        </li>
+        <li class="swiper-slide">
+          <h2><span class="italic">Natural Flavors</span></h2>
+        </li>
+        <li class="swiper-slide">
+          <h2><span class="italic">Gluten-Free</span></h2>
+        </li>
+        <li class="swiper-slide">
+          <h2><span class="italic">Probiotic Power</span></h2>
+        </li>
+      {%- endfor -%}
+    {%- endif -%}
+  </ul>
+</section>
+
+{% schema %}
+{
+  "name": "Ticker Marquee",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "marquee_item",
+      "name": "Marquee Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Keto-Friendly"
+        },
+        {
+          "type": "checkbox",
+          "id": "italic",
+          "label": "Italic Style",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ticker Marquee",
+      "blocks": [
+        { "type": "marquee_item", "settings": { "text": "Keto-Friendly", "italic": true } },
+        { "type": "marquee_item", "settings": { "text": "Natural Flavors", "italic": true } },
+        { "type": "marquee_item", "settings": { "text": "Gluten-Free", "italic": true } },
+        { "type": "marquee_item", "settings": { "text": "Probiotic Power", "italic": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

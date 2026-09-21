@@ -1,0 +1,160 @@
+<section class="standard-section common-padding" id="standards-{{ section.id }}">
+  <div class="container">
+    <div class="section-heading-content">
+      <h2>
+        {%- if section.settings.heading != blank -%}
+          {{ section.settings.heading | replace: '*', '<span class="italic">' | replace: '</span>*', '</span>' }}
+        {%- else -%}
+          The <span class="italic">Revitae Standard</span>
+        {%- endif -%}
+      </h2>
+      {%- if section.settings.subheading != blank -%}
+        <p>{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <ul class="standard-ul-content-wrapper">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>
+            <div class="standard-content">
+              <div class="standard-img">
+                {%- if block.settings.icon != blank -%}
+                  <img
+                    src="{{ block.settings.icon | image_url: width: 120 }}"
+                    alt="{{ block.settings.title | escape }}"
+                    loading="lazy"
+                    width="{{ block.settings.icon.width }}"
+                    height="{{ block.settings.icon.height }}"
+                  />
+                {%- else -%}
+                  <img
+                    src="{{ 'standard-sec-emoji.svg' | asset_url }}"
+                    alt="{{ block.settings.title | escape }}"
+                    loading="lazy"
+                    width="48"
+                    height="48"
+                  />
+                {%- endif -%}
+              </div>
+              <div class="standard-text">
+                <h3>
+                  <span class="italic">{{ block.settings.title | escape }}</span>
+                </h3>
+                <p>{{ block.settings.description | escape }}</p>
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        <li>
+          <div class="standard-content">
+            <div class="standard-img">
+              <img src="{{ 'standard-sec-emoji.svg' | asset_url }}" alt="" loading="lazy" width="48" height="48" />
+            </div>
+            <div class="standard-text">
+              <h3><span class="italic">The Gut-Hormone Axis</span></h3>
+              <p>With 5 billion CFU of B. coagulans, we support the "second brain" to help regulate mood and hormones.</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="standard-content">
+            <div class="standard-img">
+              <img src="{{ 'standard-sec-emoji.svg' | asset_url }}" alt="" loading="lazy" width="48" height="48" />
+            </div>
+            <div class="standard-text">
+              <h3><span class="italic">Organic Antioxidant Blend</span></h3>
+              <p>Infused with Elderberry, Tart Cherry, and Blueberry to fight oxidative stress and support daily recovery.</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="standard-content">
+            <div class="standard-img">
+              <img src="{{ 'standard-sec-emoji.svg' | asset_url }}" alt="" loading="lazy" width="48" height="48" />
+            </div>
+            <div class="standard-text">
+              <h3><span class="italic">Feminine-First Design</span></h3>
+              <p>Our products are specifically formulated for the female endocrine system, respecting the unique fluctuations and needs of women aged 30 to 50.</p>
+            </div>
+          </div>
+        </li>
+      {%- endif -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Standards / Benefits",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The *Revitae Standard*",
+      "info": "Surround words with asterisks for italic styling, e.g. *Revitae Standard*"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "We refuse to compromise on the quality of what you put into your body."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "standard_item",
+      "name": "Standard Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon / Emoji"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "The Gut-Hormone Axis"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "With 5 billion CFU of B. coagulans, we support the \"second brain\" to help regulate mood and hormones."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Standards / Benefits",
+      "blocks": [
+        {
+          "type": "standard_item",
+          "settings": {
+            "title": "The Gut-Hormone Axis",
+            "description": "With 5 billion CFU of B. coagulans, we support the \"second brain\" to help regulate mood and hormones."
+          }
+        },
+        {
+          "type": "standard_item",
+          "settings": {
+            "title": "Organic Antioxidant Blend",
+            "description": "Infused with Elderberry, Tart Cherry, and Blueberry to fight oxidative stress and support daily recovery."
+          }
+        },
+        {
+          "type": "standard_item",
+          "settings": {
+            "title": "Feminine-First Design",
+            "description": "Our products are specifically formulated for the female endocrine system, respecting the unique fluctuations and needs of women aged 30 to 50."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

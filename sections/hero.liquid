@@ -1,0 +1,247 @@
+<section class="feature-advertise">
+  <div class="container feature-advertise-slider swiper">
+    <ul class="feature-advertise-content swiper-wrapper">
+      <!-- Set 1 -->
+      <li class="swiper-slide">
+        <img src="{{ 'feature-advertise-img1.svg' | asset_url }}" alt="Feature 1" width="20" height="20" />
+        <span>Free Shipping</span>
+      </li>
+      <li class="swiper-slide">
+        <img src="{{ 'feature-advertise-img2.svg' | asset_url }}" alt="Feature 2" width="20" height="20" />
+        <span>30-Day Risk-Free Trial</span>
+      </li>
+      <li class="swiper-slide">
+        <img src="{{ 'feature-advertise-img3.svg' | asset_url }}" alt="Feature 3" width="20" height="20" />
+        <span>Vegan &amp; Gluten-Free</span>
+      </li>
+      <li class="swiper-slide">
+        <img src="{{ 'feature-advertise-img4.svg' | asset_url }}" alt="Feature 4" width="20" height="20" />
+        <span>Made in a GMP Facility</span>
+      </li>
+      <!-- Set 2 -->
+      <li class="swiper-slide">
+        <img src="{{ 'feature-advertise-img1.svg' | asset_url }}" alt="Feature 1" width="20" height="20" />
+        <span>Free Shipping</span>
+      </li>
+      <li class="swiper-slide">
+        <img src="{{ 'feature-advertise-img2.svg' | asset_url }}" alt="Feature 2" width="20" height="20" />
+        <span>30-Day Risk-Free Trial</span>
+      </li>
+      <li class="swiper-slide">
+        <img src="{{ 'feature-advertise-img3.svg' | asset_url }}" alt="Feature 3" width="20" height="20" />
+        <span>Vegan &amp; Gluten-Free</span>
+      </li>
+      <li class="swiper-slide">
+        <img src="{{ 'feature-advertise-img4.svg' | asset_url }}" alt="Feature 4" width="20" height="20" />
+        <span>Made in a GMP Facility</span>
+      </li>
+      <!-- Set 3 -->
+      <li class="swiper-slide">
+        <img src="{{ 'feature-advertise-img1.svg' | asset_url }}" alt="Feature 1" width="20" height="20" />
+        <span>Free Shipping</span>
+      </li>
+      <li class="swiper-slide">
+        <img src="{{ 'feature-advertise-img2.svg' | asset_url }}" alt="Feature 2" width="20" height="20" />
+        <span>30-Day Risk-Free Trial</span>
+      </li>
+      <li class="swiper-slide">
+        <img src="{{ 'feature-advertise-img3.svg' | asset_url }}" alt="Feature 3" width="20" height="20" />
+        <span>Vegan &amp; Gluten-Free</span>
+      </li>
+      <li class="swiper-slide">
+        <img src="{{ 'feature-advertise-img4.svg' | asset_url }}" alt="Feature 4" width="20" height="20" />
+        <span>Made in a GMP Facility</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="banner">
+  <div class="banner-absolute">
+    {% if section.settings.banner_overlay_image != blank %}
+      <img src="{{ section.settings.banner_overlay_image | image_url: width: 800 }}" alt="" />
+    {% else %}
+      <img src="{{ 'banner-absolute-img.png' | asset_url }}" alt="" />
+    {% endif %}
+  </div>
+  <div class="container">
+    <div class="banner-content">
+      <h1>
+        {{ section.settings.title }}
+        {% if section.settings.title_italic != blank %}
+          <span class="italic">{{ section.settings.title_italic }}</span>
+        {% endif %}
+      </h1>
+      <p>
+        {{ section.settings.description }}
+      </p>
+      <ul class="banner-ul">
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            {% if block.type == 'bullet_item' %}
+              <li {{ block.shopify_attributes }}>
+                <img src="{{ 'banner-ul-icon.svg' | asset_url }}" alt="" width="20" height="20" />
+                {{ block.settings.text }}
+              </li>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <li>
+            <img src="{{ 'banner-ul-icon.svg' | asset_url }}" alt="" width="20" height="20" /> Fall into deep restorative sleep every night
+          </li>
+          <li>
+            <img src="{{ 'banner-ul-icon.svg' | asset_url }}" alt="" width="20" height="20" /> Maintain calm focus without the afternoon crash
+          </li>
+          <li>
+            <img src="{{ 'banner-ul-icon.svg' | asset_url }}" alt="" width="20" height="20" /> Say goodbye to unpredictable mood swings
+          </li>
+        {% endif %}
+      </ul>
+      <div class="banner-order-btn">
+        <a href="{{ section.settings.button_url | default: '#product-showcase' }}" class="btn btn-primary">
+          {{ section.settings.button_text | default: 'Order Yours Now' }}
+          <span class="btn-img">
+            <img src="{{ 'btn-plus.svg' | asset_url }}" alt="" width="14" height="14" />
+          </span>
+        </a>
+      </div>
+      <div class="banner-review">
+        <div class="br-left">
+          {% if section.settings.review_image != blank %}
+            <img src="{{ section.settings.review_image | image_url: width: 100 }}" alt="" />
+          {% else %}
+            <img src="{{ 'br-img1.png' | asset_url }}" alt="" />
+          {% endif %}
+        </div>
+        <div class="br-right">
+          <p>
+            "{{ section.settings.review_quote_regular }}"
+            {% if section.settings.review_quote_bold != blank %}
+              <span class="bold">{{ section.settings.review_quote_bold }}</span>
+            {% endif %}
+          </p>
+          <div class="customer-name">
+            <span>{{ section.settings.review_author | default: 'Jenna M' }}</span>
+            <span class="verifired-badge">
+              <img src="{{ 'white-check.svg' | asset_url }}" alt="" width="12" height="12" />
+              {{ section.settings.review_badge_text | default: 'Verified Customer' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading text",
+      "default": "Reclaim Your Radiance with"
+    },
+    {
+      "type": "text",
+      "id": "title_italic",
+      "label": "Heading italic accent",
+      "default": "Expert Hormonal Alignment"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "A premium, botanical daily ritual designed to gently realign your body’s natural rhythm in 30 days or less."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Order Yours Now"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_overlay_image",
+      "label": "Hero overlay image"
+    },
+    {
+      "type": "header",
+      "content": "Customer Review"
+    },
+    {
+      "type": "image_picker",
+      "id": "review_image",
+      "label": "Reviewer avatar"
+    },
+    {
+      "type": "text",
+      "id": "review_quote_regular",
+      "label": "Review quote (regular)",
+      "default": "I was skeptical about gummies, but after two weeks,"
+    },
+    {
+      "type": "text",
+      "id": "review_quote_bold",
+      "label": "Review quote (bold)",
+      "default": "the 'brain fog' is gone and I'm sleeping through the night for the first time in years."
+    },
+    {
+      "type": "text",
+      "id": "review_author",
+      "label": "Review author name",
+      "default": "Jenna M"
+    },
+    {
+      "type": "text",
+      "id": "review_badge_text",
+      "label": "Review badge text",
+      "default": "Verified Customer"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bullet_item",
+      "name": "Benefit Bullet",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Bullet text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Section",
+      "blocks": [
+        {
+          "type": "bullet_item",
+          "settings": {
+            "text": "Fall into deep restorative sleep every night"
+          }
+        },
+        {
+          "type": "bullet_item",
+          "settings": {
+            "text": "Maintain calm focus without the afternoon crash"
+          }
+        },
+        {
+          "type": "bullet_item",
+          "settings": {
+            "text": "Say goodbye to unpredictable mood swings"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

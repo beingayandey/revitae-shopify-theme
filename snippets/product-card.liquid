@@ -1,0 +1,68 @@
+{% comment %}
+  Renders a product card using Revitae frontend structure.
+  Accepts:
+  - product: {Object} Shopify Product object (optional)
+  - show_vendor: {Boolean} Show vendor (optional)
+{% endcomment %}
+
+{%- liquid
+  assign card_product = product
+  assign is_available = card_product.available
+  assign compare_at_price = card_product.compare_at_price
+  assign price = card_product.price
+  assign on_sale = false
+  if compare_at_price > price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="product-col">
+  <div class="product-box">
+    <div class="product-images">
+      <a href="{{ card_product.url | default: '#' }}" aria-label="{{ card_product.title | escape }}">
+        {% if card_product.featured_image != blank %}
+          <img
+            src="{{ card_product.featured_image | image_url: width: 600 }}"
+            alt="{{ card_product.featured_image.alt | default: card_product.title | escape }}"
+            loading="lazy"
+            width="300"
+            height="300"
+          >
+        {% else %}
+          <img
+            src="{{ 'product-img1.png' | asset_url }}"
+            alt="{{ card_product.title | default: 'Product' | escape }}"
+            loading="lazy"
+            width="300"
+            height="300"
+          >
+        {% endif %}
+      </a>
+      {% if on_sale %}
+        <div class="offer">
+          Save {{ compare_at_price | minus: price | money }}
+        </div>
+      {% endif %}
+    </div>
+    <div class="product-details">
+      <div class="product-qty">
+        <a href="{{ card_product.url | default: '#' }}" class="product-title-link">
+          {{ card_product.title | default: 'Product Title' }}
+        </a>
+      </div>
+      <div class="product-duration">
+        {% if is_available == false %}
+          <span class="sold-out-badge">Sold Out</span>
+        {% else %}
+          {{ card_product.type | default: 'Daily Supplement' }}
+        {% endif %}
+      </div>
+      <div class="product-price">
+        {% if on_sale %}
+          <span class="old-price" style="text-decoration: line-through; opacity: 0.7; margin-right: 4px;">{{ compare_at_price | money }}</span>
+        {% endif %}
+        <span>{{ price | default: 0 | money }}</span>
+      </div>
+    </div>
+  </div>
+</div>
