@@ -12,7 +12,7 @@ https://revitae-dtzobyio.myshopify.com/
 ## 📸 Screenshots
 
 ### Homepage — Desktop
-![Revitae Shopify Homepage](./screenshots/revitae-dtzobyio.myshopify.co.png)
+![Revitae Shopify Homepage](./screenshots/Home Page (Desktop).png)
 
 ### Homepage — Mobile
 ![Revitae Shopify Mobile](./screenshots/revitae-dtzobyio.myshopify.com%28iPhone%2016%20Pro%20Max%29.png)
